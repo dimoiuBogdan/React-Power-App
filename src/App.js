@@ -21,7 +21,10 @@ const App = () => {
         <div className="w-full min-h-screen">
           <Switch>
             <Route path="/sign-in" component={() => <AuthPage />} />
-            <Route path="/sign-up" component={() => <AuthPage signUp />} />
+            <Route
+              path="/sign-up"
+              component={() => <AuthPage signUpInterface />}
+            />
             <div className="container mx-auto"></div>
           </Switch>
         </div>

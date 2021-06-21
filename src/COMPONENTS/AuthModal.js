@@ -1,11 +1,23 @@
+import { useEffect } from "react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { authActions, signUp } from "../STORE/auth-slice";
 
-const AuthModal = ({ signUp }) => {
+const AuthModal = ({ signUpInterface }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
+  };
+
+  const signUpHandler = (e) => {
+    e.preventDefault();
+    dispatch(signUp(email, password));
   };
 
   return (
@@ -19,10 +31,11 @@ const AuthModal = ({ signUp }) => {
           <h3 className="transition-all hover:text-red-400">Sign Up</h3>
         </NavLink>
       </div>
-      <form>
+      <form onSubmit={signUpHandler}>
         <div className="mb-8">
           <p className="text-gray-200 mb-2 text-lg">E-Mail</p>
           <input
+            onChange={(e) => setEmail(e.target.value)}
             className="w-full bg-red-200 bg-opacity-40 rounded-sm p-2 text-lg font-medium text-white placeholder-gray-300"
             placeholder="Enter your e-mail..."
             id="email"
@@ -32,6 +45,7 @@ const AuthModal = ({ signUp }) => {
         <p className="text-gray-200 mb-2 text-lg">Password</p>
         <div className="relative">
           <input
+            onChange={(e) => setPassword(e.target.value)}
             className="w-full bg-red-200 bg-opacity-40 rounded-sm p-2 text-lg font-medium text-white placeholder-gray-300"
             type={showPassword ? "text" : "password"}
             placeholder="Enter your password..."
@@ -43,7 +57,7 @@ const AuthModal = ({ signUp }) => {
             } absolute top-1/2 transform -translate-y-1/2 right-5 text-xl cursor-pointer text-gray-300`}
           ></i>
         </div>
-        {signUp && (
+        {signUpInterface && (
           <div>
             <p className="text-gray-200 mb-2 mt-8 text-lg">Confirm Password</p>
             <div className="relative">
@@ -65,9 +79,18 @@ const AuthModal = ({ signUp }) => {
           type="submit"
           className="w-full text-xl py-2 font-medium from-red-500 bg-gradient-to-r to-red-900 rounded-md mt-12"
         >
-          {signUp ? "Sign Up" : "Log In"}
+          {signUpInterface ? "Sign Up" : "Log In"}
         </button>
       </form>
+      {auth.message.content && (
+        <h3
+          className={`text-center text-xl mt-6 ${
+            auth.message.type === "error" ? "text-red-500" : "text-green-500"
+          }`}
+        >
+          {auth.message.content}
+        </h3>
+      )}
     </div>
   );
 };
