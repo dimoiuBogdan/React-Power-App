@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
 
 export const authSlice = createSlice({
   name: "auth",
@@ -37,13 +38,31 @@ export const authSlice = createSlice({
   },
 });
 
+const createUserInDB = (id) => {
+  const db = firebase.firestore();
+  db.collection("users")
+    .doc(id)
+    .set({
+      first: "Ada",
+      last: "Lovelace",
+      born: 1815,
+    })
+    .then((docRef) => {
+      console.log("Document written with ID: ", docRef.id);
+    })
+    .catch((error) => {
+      console.error("Error adding document: ", error);
+    });
+};
+
 export const signUp = (email, password) => {
   return (dispatch) => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => {
+      .then((userCredential) => {
         dispatch(authActions.thenConfirm());
+        createUserInDB(userCredential.user.uid);
       })
       .catch((error) => {
         dispatch(authActions.catchError({ error: error.message }));

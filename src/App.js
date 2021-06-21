@@ -10,7 +10,7 @@ const App = () => {
     <Router>
       <Suspense
         fallback={
-          <div className="flex items-center justify-center bg-black bg-opacity-80 text-center text-4xl text-red-400 font-bold">
+          <div className="flex items-center min-h-screen justify-center bg-black bg-opacity-80 text-center text-4xl text-red-400 font-bold">
             Loading...
           </div>
         }
