@@ -6,15 +6,12 @@ export const authSlice = createSlice({
   name: "auth",
   initialState: {
     userId: "",
-    isLoggedIn: false,
     message: {
       type: "",
       content: "",
     },
   },
   reducers: {
-    signIn(state, action) {},
-
     catchError(state, action) {
       state.message = { type: "error", content: action.payload.error };
     },
@@ -30,7 +27,13 @@ export const authSlice = createSlice({
       state.message = { type: "", content: "" };
     },
 
-    signOut(state, action) {},
+    assignUserId(state, action) {
+      state.userId = action.payload.uid;
+    },
+
+    signUserOut(state) {
+      state.userId = "";
+    },
   },
 });
 
@@ -44,6 +47,36 @@ export const signUp = (email, password) => {
       })
       .catch((error) => {
         dispatch(authActions.catchError({ error: error.message }));
+      });
+  };
+};
+
+export const signIn = (email, password, history) => {
+  return (dispatch) => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        dispatch(authActions.assignUserId({ uid: userCredential.user.uid }));
+        history.push("/workouts");
+      })
+      .catch((error) => {
+        dispatch(authActions.catchError({ error: error.message }));
+      });
+  };
+};
+
+export const signOut = (history) => {
+  return (dispatch) => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        dispatch(authActions.signUserOut());
+        history.push("/sign-in");
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 };

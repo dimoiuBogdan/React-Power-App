@@ -1,12 +1,9 @@
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import React, { Suspense } from "react";
+import PrivateRoute from "./COMPONENTS/PrivateRoute";
 
 const AuthPage = React.lazy(() => import("./PAGES/AuthPage"));
+const WorkoutsPage = React.lazy(() => import("./PAGES/WorkoutsPage"));
 
 const App = () => {
   return (
@@ -25,10 +22,11 @@ const App = () => {
               path="/sign-up"
               component={() => <AuthPage signUpInterface />}
             />
-            <div className="container mx-auto"></div>
+            <PrivateRoute>
+              <Route path="/workouts" component={() => <WorkoutsPage />} />
+            </PrivateRoute>
           </Switch>
         </div>
-        <Redirect exact from="/" to="/sign-in" />
       </Suspense>
     </Router>
   );

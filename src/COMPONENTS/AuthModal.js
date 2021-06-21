@@ -1,8 +1,7 @@
-import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { authActions, signUp } from "../STORE/auth-slice";
+import { NavLink, useHistory } from "react-router-dom";
+import { signIn, signUp } from "../STORE/auth-slice";
 
 const AuthModal = ({ signUpInterface }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -10,6 +9,7 @@ const AuthModal = ({ signUpInterface }) => {
   const [password, setPassword] = useState("");
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
@@ -18,6 +18,11 @@ const AuthModal = ({ signUpInterface }) => {
   const signUpHandler = (e) => {
     e.preventDefault();
     dispatch(signUp(email, password));
+  };
+
+  const loginHandler = (e) => {
+    e.preventDefault();
+    dispatch(signIn(email, password, history));
   };
 
   return (
@@ -31,7 +36,7 @@ const AuthModal = ({ signUpInterface }) => {
           <h3 className="transition-all hover:text-red-400">Sign Up</h3>
         </NavLink>
       </div>
-      <form onSubmit={signUpHandler}>
+      <form onSubmit={signUpInterface ? signUpHandler : loginHandler}>
         <div className="mb-8">
           <p className="text-gray-200 mb-2 text-lg">E-Mail</p>
           <input
