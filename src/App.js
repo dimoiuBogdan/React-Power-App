@@ -1,5 +1,12 @@
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import React, { Suspense } from "react";
+
+const AuthPage = React.lazy(() => import("./PAGES/AuthPage"));
 
 const App = () => {
   return (
@@ -11,7 +18,14 @@ const App = () => {
           </div>
         }
       >
-        <Switch></Switch>
+        <div className="w-full min-h-screen">
+          <Switch>
+            <Route path="/sign-in" component={() => <AuthPage />} />
+            <Route path="/sign-up" component={() => <AuthPage signUp />} />
+            <div className="container mx-auto"></div>
+          </Switch>
+        </div>
+        <Redirect exact from="/" to="/sign-in" />
       </Suspense>
     </Router>
   );
