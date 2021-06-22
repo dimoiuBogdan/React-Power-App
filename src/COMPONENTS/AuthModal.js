@@ -7,6 +7,7 @@ const AuthModal = ({ signUpInterface }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -17,7 +18,9 @@ const AuthModal = ({ signUpInterface }) => {
 
   const signUpHandler = (e) => {
     e.preventDefault();
-    dispatch(signUp(email, password));
+    confirmPassword !== password
+      ? alert("Passwords are not the same")
+      : dispatch(signUp(email, password));
   };
 
   const loginHandler = (e) => {
@@ -67,6 +70,7 @@ const AuthModal = ({ signUpInterface }) => {
             <p className="text-gray-200 mb-2 mt-8 text-lg">Confirm Password</p>
             <div className="relative">
               <input
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full bg-red-200 bg-opacity-40 rounded-sm p-2 text-lg font-medium text-white placeholder-gray-300"
                 type={showPassword ? "text" : "password"}
                 placeholder="Confirm your password..."

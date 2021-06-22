@@ -10,7 +10,8 @@ const AuthPage = ({ signUpInterface }) => {
   const history = useHistory();
 
   const clearNotificationMessage = () => {
-    auth.message.content && dispatch(authActions.clearMessage());
+    auth.message.content &&
+      dispatch(authActions.setCustomMessage({ type: "", content: "" }));
   };
 
   const signUserOut = () => {

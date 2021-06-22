@@ -24,8 +24,9 @@ export const authSlice = createSlice({
       };
     },
 
-    clearMessage(state) {
-      state.message = { type: "", content: "" };
+    setCustomMessage(state, action) {
+      state.message.type = action.payload.type;
+      state.message.content = action.payload.content;
     },
 
     assignUserId(state, action) {
@@ -40,19 +41,7 @@ export const authSlice = createSlice({
 
 const createUserInDB = (id) => {
   const db = firebase.firestore();
-  db.collection("users")
-    .doc(id)
-    .set({
-      first: "Ada",
-      last: "Lovelace",
-      born: 1815,
-    })
-    .then((docRef) => {
-      console.log("Document written with ID: ", docRef.id);
-    })
-    .catch((error) => {
-      console.error("Error adding document: ", error);
-    });
+  db.collection("users").doc(id).set({});
 };
 
 export const signUp = (email, password) => {
