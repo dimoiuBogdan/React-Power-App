@@ -7,6 +7,10 @@
     url("./IMAGES/auth-bg.jpg");
 }
 
+#page {
+  @apply min-h-screen w-full pt-16 container mx-auto max-w-screen-md;
+}
+
 *:focus {
   outline: none;
 }

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import React, { Suspense } from "react";
 import PrivateRoute from "./COMPONENTS/PrivateRoute";
+import Navbar from "./COMPONENTS/Navbar";
 
 const AuthPage = React.lazy(() => import("./PAGES/AuthPage"));
 const WorkoutsPage = React.lazy(() => import("./PAGES/WorkoutsPage"));
@@ -15,7 +16,7 @@ const App = () => {
           </div>
         }
       >
-        <div className="w-full min-h-screen">
+        <div className="w-full min-h-screen relative">
           <Switch>
             <Route path="/sign-in" component={() => <AuthPage />} />
             <Route
@@ -23,6 +24,7 @@ const App = () => {
               component={() => <AuthPage signUpInterface />}
             />
             <PrivateRoute>
+              <Navbar solid />
               <Route path="/workouts" component={() => <WorkoutsPage />} />
             </PrivateRoute>
           </Switch>
