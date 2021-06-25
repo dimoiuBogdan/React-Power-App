@@ -8,11 +8,17 @@ const SignOut = () => {
   const auth = useSelector((state) => state.auth);
 
   const signOutHandler = () => {
-    console.log(auth);
     dispatch(signOut(history, auth.userId));
   };
 
-  return <button onClick={signOutHandler}>Sign Out</button>;
+  return (
+    <button
+      className="bg-red-400 px-3 rounded-md shadow-md transition-all hover:bg-red-500 hover:scale-105 transform"
+      onClick={signOutHandler}
+    >
+      Sign Out
+    </button>
+  );
 };
 
 export default SignOut;

@@ -2,11 +2,30 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import React, { Suspense } from "react";
 import PrivateRoute from "./COMPONENTS/PrivateRoute";
 import Navbar from "./COMPONENTS/Navbar";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { authActions } from "./STORE/auth-slice";
 
 const AuthPage = React.lazy(() => import("./PAGES/AuthPage"));
 const WorkoutsPage = React.lazy(() => import("./PAGES/WorkoutsPage"));
 
 const App = () => {
+  const [checkedForData, setCheckedForData] = useState(false);
+  const dispatch = useDispatch();
+
+  const signInFromLocalStorage = async () => {
+    const localStorageData = JSON.parse(localStorage.getItem("user"));
+    localStorageData &&
+      dispatch(authActions.assignUserId(localStorageData.uid));
+  };
+
+  useEffect(() => {
+    signInFromLocalStorage().then(() => {
+      setCheckedForData((prev) => !prev);
+    });
+  }, []);
+
   return (
     <Router>
       <Suspense
@@ -16,19 +35,21 @@ const App = () => {
           </div>
         }
       >
-        <div className="w-full min-h-screen relative">
-          <Switch>
-            <Route path="/sign-in" component={() => <AuthPage />} />
-            <Route
-              path="/sign-up"
-              component={() => <AuthPage signUpInterface />}
-            />
-            <PrivateRoute>
-              <Navbar solid />
-              <Route path="/workouts" component={() => <WorkoutsPage />} />
-            </PrivateRoute>
-          </Switch>
-        </div>
+        {checkedForData && (
+          <div className="w-full min-h-screen relative">
+            <Switch>
+              <Route path="/sign-in" component={() => <AuthPage />} />
+              <Route
+                path="/sign-up"
+                component={() => <AuthPage signUpInterface />}
+              />
+              <PrivateRoute>
+                <Navbar solid />
+                <Route path="/workouts" component={() => <WorkoutsPage />} />
+              </PrivateRoute>
+            </Switch>
+          </div>
+        )}
       </Suspense>
     </Router>
   );

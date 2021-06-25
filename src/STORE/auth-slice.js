@@ -7,7 +7,6 @@ export const authSlice = createSlice({
   name: "auth",
   initialState: {
     userId: "",
-    connected: false,
     message: {
       type: "",
       content: "",
@@ -44,16 +43,11 @@ const createUserInDB = (id) => {
   const db = firebase.firestore();
   db.collection("users").doc(id).set({
     uid: id,
-    connected: false,
   });
 };
 
-const updateUserOnLogin = async (id, loginState) => {
-  const db = firebase.firestore();
-  const userRef = db.collection("users").doc(id);
-  return userRef.update({
-    connected: loginState,
-  });
+export const saveToLocalStorage = (uid, email, password) => {
+  localStorage.setItem("user", JSON.stringify({ uid, email, password }));
 };
 
 export const signUp = (email, password) => {
@@ -78,7 +72,7 @@ export const signIn = (email, password, history) => {
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         dispatch(authActions.assignUserId({ uid: userCredential.user.uid }));
-        updateUserOnLogin(userCredential.user.uid, true);
+        saveToLocalStorage(userCredential.user.uid, email, password);
         history.push("/workouts");
       })
       .catch((error) => {
@@ -87,14 +81,13 @@ export const signIn = (email, password, history) => {
   };
 };
 
-export const signOut = (history, userId) => {
+export const signOut = (history) => {
   return (dispatch) => {
     firebase
       .auth()
       .signOut()
       .then(() => {
         dispatch(authActions.signUserOut());
-        updateUserOnLogin(userId, false);
         history.push("/sign-in");
       })
       .catch((error) => {
