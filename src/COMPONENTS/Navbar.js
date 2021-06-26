@@ -54,17 +54,17 @@ const Navbar = ({ solid }) => {
             ></div>
           </div>
           <div
-            className={`lg:border-0 lg:flex-row lg:bg-opacity-0 lg:relative lg:w-auto
+            className={`lg:border-0 lg:flex-row min-w-max lg:bg-opacity-0 lg:relative lg:w-auto
           flex-col flex transition-all duration-1000 fixed top-0 h-full w-1/3 min-w-30rem border-r-2 border-red-400 left-0 bg-black bg-opacity-70 justify-evenly text-2xl items-center
           ${isVisible ? "left-0" : "-left-96 lg:left-0"}`}
           >
             <NavLink
               exact
               activeClassName="active-link"
-              to="/homepage"
+              to="/workouts"
               className="mx-4 flex items-center cursor-pointer transition-all hover:text-red-400 transform hover:scale-105"
             >
-              Home
+              Workouts
             </NavLink>
             <NavLink
               activeClassName="active-link"

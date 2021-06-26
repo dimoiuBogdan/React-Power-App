@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import React, { Suspense } from "react";
 import PrivateRoute from "./COMPONENTS/PrivateRoute";
 import Navbar from "./COMPONENTS/Navbar";
@@ -36,7 +41,7 @@ const App = () => {
         }
       >
         {checkedForData && (
-          <div className="w-full min-h-screen relative">
+          <div className="w-full min-h-screen relative" id="main-bg">
             <Switch>
               <Route path="/sign-in" component={() => <AuthPage />} />
               <Route
@@ -44,7 +49,8 @@ const App = () => {
                 component={() => <AuthPage signUpInterface />}
               />
               <PrivateRoute>
-                <Navbar solid />
+                <Navbar />
+                <Redirect from="/" exact to="/workouts" />
                 <Route path="/workouts" component={() => <WorkoutsPage />} />
               </PrivateRoute>
             </Switch>

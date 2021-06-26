@@ -15,7 +15,7 @@ const AuthPage = ({ signUpInterface }) => {
   };
 
   const signUserOut = () => {
-    auth.userId && dispatch(signOut(history));
+    dispatch(signOut(history));
   };
 
   useEffect(() => {

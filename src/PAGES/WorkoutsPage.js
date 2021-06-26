@@ -2,7 +2,7 @@ import { useState } from "react";
 import WorkoutCard from "../COMPONENTS/WorkoutCard";
 
 const WorkoutsPage = () => {
-  const [state, setstate] = useState(initialState);
+  const [suggestedWorkouts, setSuggestedWorkouts] = useState([]);
 
   return (
     <div id="page">
