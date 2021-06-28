@@ -41,7 +41,10 @@ const App = () => {
         }
       >
         {checkedForData && (
-          <div className="w-full min-h-screen relative" id="main-bg">
+          <div
+            className="w-full overflow-hidden min-h-screen relative"
+            id="main-bg"
+          >
             <Switch>
               <Route path="/sign-in" component={() => <AuthPage />} />
               <Route

@@ -8,13 +8,13 @@
 }
 
 #page {
-  @apply min-h-screen w-full pt-14 container mx-auto max-w-screen-md;
+  @apply min-h-screen bg-fixed w-full pt-14 container mx-auto max-w-screen-md;
 }
 
 #main-bg {
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(58, 0, 0, 0.5)),
     url("./IMAGES/main-bg.jpeg");
-  @apply bg-cover bg-center;
+  @apply bg-cover bg-fixed bg-center;
 }
 
 *:focus {

@@ -94,7 +94,7 @@ const AuthModal = ({ signUpInterface }) => {
       {auth.message.content && (
         <h3
           className={`text-center text-xl mt-6 ${
-            auth.message.type === "error" ? "text-red-500" : "text-green-500"
+            auth.message.type === "error" ? "text-red-400" : "text-green-500"
           }`}
         >
           {auth.message.content}

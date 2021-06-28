@@ -30,7 +30,7 @@ const Navbar = ({ solid }) => {
       style={{
         backgroundColor: !solid && `rgba(75, 85, 99, ${navBackground})`,
         borderBottom:
-          !solid && `2px solid rgba(96, 165, 250, ${navBackground})`,
+          !solid && `2px solid rgba(248, 113, 113, ${navBackground})`,
       }}
     >
       <div className="container mx-auto items-center justify-between flex">
