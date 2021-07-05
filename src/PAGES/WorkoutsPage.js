@@ -1,63 +1,28 @@
 import { useState } from "react";
 import WorkoutCard from "../COMPONENTS/WorkoutCard";
+import firebase from "firebase/app";
+import "firebase/firestore";
+import { useEffect } from "react";
 
 const WorkoutsPage = () => {
-  const [suggestedWorkouts] = useState([
-    {
-      image: "push-day.jpg",
-      title: "Chest & Triceps",
-      frequency: "2",
-      equipmentNeeded: "Full Gym",
-      difficultyBars: [false, true, true],
-      duration: "1",
-      path: "push-day",
-    },
-    {
-      image: "pull-day.jpg",
-      title: "back & biceps",
-      frequency: "2",
-      equipmentNeeded: "Full Gym",
-      difficultyBars: [false, true, true],
-      duration: "1",
-      path: "pull-day",
-    },
-    {
-      image: "leg-day.jpg",
-      title: "legs & shoulders",
-      frequency: "2",
-      equipmentNeeded: "Full Gym",
-      difficultyBars: [false, true, true],
-      duration: "1",
-      path: "leg-day",
-    },
-    {
-      image: "upper-day.jpg",
-      title: "Upper Body",
-      frequency: "2",
-      equipmentNeeded: "Full Gym",
-      difficultyBars: [true, true, false],
-      duration: "1",
-      path: "upper-day",
-    },
-    {
-      image: "lower-day.jpg",
-      title: "lower body",
-      frequency: "2",
-      equipmentNeeded: "Full Gym",
-      difficultyBars: [true, true, false],
-      duration: "1",
-      path: "lower-day",
-    },
-    {
-      image: "full-day.jpg",
-      title: "full body",
-      frequency: "3",
-      equipmentNeeded: "Full Gym",
-      difficultyBars: [true, false, false],
-      duration: "1.5",
-      path: "full-day",
-    },
-  ]);
+  const [suggestedWorkouts, setSuggestedWorkouts] = useState([]);
+  const db = firebase.firestore();
+
+  const getWorkoutsFromFirestore = () => {
+    db.collection("suggestedWorkouts")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          setSuggestedWorkouts((prevWorkouts) => {
+            return [...prevWorkouts, doc.data()];
+          });
+        });
+      });
+  };
+
+  useEffect(() => {
+    if (suggestedWorkouts.length === 0) getWorkoutsFromFirestore();
+  }, []);
 
   return (
     <div id="page">

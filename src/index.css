@@ -11,6 +11,10 @@
   @apply min-h-screen bg-fixed w-full pt-14 container mx-auto max-w-screen-md;
 }
 
+.active-link {
+  @apply text-red-400 font-medium;
+}
+
 #main-bg {
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(58, 0, 0, 0.5)),
     url("./IMAGES/main-bg.jpeg");

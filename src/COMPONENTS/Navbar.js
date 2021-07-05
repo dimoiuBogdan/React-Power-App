@@ -11,7 +11,7 @@ const Navbar = ({ solid }) => {
 
   // Set nav background opacity as you scroll
   const scrollFunction = () => {
-    setNavBackground(window.scrollY / 500);
+    if (window.scrollY < 500) setNavBackground(window.scrollY / 500);
   };
 
   useEffect(() => {

@@ -18,7 +18,7 @@ const WorkoutCard = ({ suggestedWorkout, index }) => {
       } overflow-hidden rounded-md shadow-md flex mb-12`}
     >
       <img
-        src={image && require(`../IMAGES/${image}`).default}
+        src={image}
         alt="workout-cover"
         className="w-1/3 border-r-4 border-red-500 object-cover"
       />

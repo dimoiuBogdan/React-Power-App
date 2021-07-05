@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { authActions } from "./STORE/auth-slice";
+import SingleWorkoutPage from "./PAGES/SingleWorkoutPage";
 
 const AuthPage = React.lazy(() => import("./PAGES/AuthPage"));
 const WorkoutsPage = React.lazy(() => import("./PAGES/WorkoutsPage"));
@@ -53,8 +54,14 @@ const App = () => {
               />
               <PrivateRoute>
                 <Navbar />
-                <Redirect from="/" exact to="/workouts" />
+                <Route exact path="/">
+                  <Redirect to="/workouts"></Redirect>
+                </Route>
                 <Route path="/workouts" component={() => <WorkoutsPage />} />
+                <Route
+                  path="/:id-day"
+                  component={() => <SingleWorkoutPage />}
+                />
               </PrivateRoute>
             </Switch>
           </div>
