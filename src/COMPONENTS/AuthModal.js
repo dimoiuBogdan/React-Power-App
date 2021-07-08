@@ -4,17 +4,12 @@ import { NavLink, useHistory } from "react-router-dom";
 import { signIn, signUp } from "../STORE/auth-slice";
 
 const AuthModal = ({ signUpInterface }) => {
-  const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const toggleShowPassword = () => {
-    setShowPassword((prev) => !prev);
-  };
 
   const signUpHandler = (e) => {
     e.preventDefault();
@@ -55,15 +50,9 @@ const AuthModal = ({ signUpInterface }) => {
           <input
             onChange={(e) => setPassword(e.target.value)}
             className="w-full bg-red-200 bg-opacity-40 rounded-sm p-2 text-lg font-medium text-white placeholder-gray-300"
-            type={showPassword ? "text" : "password"}
+            type="password"
             placeholder="Enter your password..."
           />
-          <i
-            onClick={toggleShowPassword}
-            className={`fas fa-eye${
-              showPassword ? "-slash" : ""
-            } absolute top-1/2 transform -translate-y-1/2 right-5 text-xl cursor-pointer text-gray-300`}
-          ></i>
         </div>
         {signUpInterface && (
           <div>
@@ -72,15 +61,9 @@ const AuthModal = ({ signUpInterface }) => {
               <input
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full bg-red-200 bg-opacity-40 rounded-sm p-2 text-lg font-medium text-white placeholder-gray-300"
-                type={showPassword ? "text" : "password"}
+                type="password"
                 placeholder="Confirm your password..."
               />
-              <i
-                onClick={toggleShowPassword}
-                className={`fas fa-eye${
-                  showPassword ? "-slash" : ""
-                } absolute top-1/2 transform -translate-y-1/2 right-5 text-xl cursor-pointer text-gray-300`}
-              ></i>
             </div>
           </div>
         )}

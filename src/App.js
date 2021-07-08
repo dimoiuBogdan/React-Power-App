@@ -58,10 +58,7 @@ const App = () => {
                   <Redirect to="/workouts"></Redirect>
                 </Route>
                 <Route path="/workouts" component={() => <WorkoutsPage />} />
-                <Route
-                  path="/:id-day"
-                  component={() => <SingleWorkoutPage />}
-                />
+                <Route path="/:id" component={() => <SingleWorkoutPage />} />
               </PrivateRoute>
             </Switch>
           </div>

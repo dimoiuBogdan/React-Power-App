@@ -1,25 +1,18 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AuthModal from "../COMPONENTS/AuthModal";
-import { authActions, signOut } from "../STORE/auth-slice";
-import { useHistory } from "react-router";
+import { authActions } from "../STORE/auth-slice";
 
 const AuthPage = ({ signUpInterface }) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  const history = useHistory();
 
   const clearNotificationMessage = () => {
     auth.message.content &&
       dispatch(authActions.setCustomMessage({ type: "", content: "" }));
   };
 
-  const signUserOut = () => {
-    dispatch(signOut(history));
-  };
-
   useEffect(() => {
-    signUserOut();
     clearNotificationMessage();
   }, []);
 
